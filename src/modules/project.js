@@ -1,5 +1,6 @@
 export default class Project {
     constructor(title) {
+        this.id = crypto.randomUUID();
         this.title = title;
         this.todoList = [];
     }
@@ -16,5 +17,9 @@ export default class Project {
         const todo = this.todoList.find(curTodo => curTodo.id === todoId);
         if (todo)
             return todo;
+    }
+
+    updateProject(newTitle) {
+        this.title = newTitle;
     }
 }

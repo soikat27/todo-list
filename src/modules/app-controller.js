@@ -1,4 +1,5 @@
 import Project from "./project.js";
+import Todo from "./todo.js";
 
 const appController = (() => {
     const defaultProject = new Project("Default");
@@ -27,7 +28,7 @@ const appController = (() => {
     function deleteProject(projectId) {
         const project = projects.find(item => item.id === projectId);
         if (project === defaultProject) {
-            // alert("Default project can't be deleted!");
+            alert("Default project can't be deleted!");
             return false;
         }
 
@@ -37,5 +38,30 @@ const appController = (() => {
         return true;
     }
 
-    
+    function updateProject(projectId, newTitle) {
+        const project = projects.find(item => item.id === projectId);
+
+        if (project)
+            return false;
+        if (project === defaultProject) {
+            alert("Default project can't be updated!");
+            return false;
+        }
+
+        project.updateProject(newTitle);
+        return true;
+    }
+
+    function addTodo(title, description, dueDate, priority, notes="", checklist=[]) {
+        const todo = new Todo(title, description, dueDate, priority, notes, checklist);
+        curProject.addTodo(todo);
+    }
+
+    function removeTodo(todoId) {
+        createProject.removeTodo(todoId);
+    }
+
+    return {projects, getAllProjects, getCurrentProject, selectProject, createProject, deleteProject, addTodo, removeTodo};
 })();
+
+export default appController;

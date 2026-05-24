@@ -1,1 +1,257 @@
-/* styles starts here */
+:root {
+  --bg: #0a0a0b;
+  --bg-rail: #111114;
+  --bg-hover: #1a1a1f;
+  --border: #2a2a32;
+  --border-soft: #1f1f26;
+  --accent: #a78bfa;
+  --accent-dim: rgba(167, 139, 250, 0.12);
+  --accent-hover: #c4b5fd;
+  --text: #ececee;
+  --text-muted: #71717a;
+  --text-faint: #52525b;
+  --radius: 8px;
+  --content-width: 36rem;
+  --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: inherit;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Top brand strip */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1.75rem 0 1.25rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.app-logo {
+  flex-shrink: 0;
+  width: 1.35rem;
+  height: 1.35rem;
+  color: var(--accent);
+}
+
+.app-name {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.app-name__accent {
+  color: var(--accent);
+}
+
+/* Horizontal project rail */
+.project-rail {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  padding: 0.75rem 0 1.25rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.project-list {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.project-item {
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.project-item:hover {
+  color: var(--text);
+  background-color: var(--bg-hover);
+}
+
+.project-item--active {
+  color: var(--text);
+  background-color: var(--accent-dim);
+  box-shadow: inset 0 0 0 1px rgba(167, 139, 250, 0.25);
+}
+
+.btn-icon--add-project {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  padding: 0.4rem 0.65rem;
+  color: var(--accent);
+  font-size: 0.8rem;
+  border-radius: var(--radius);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-icon--add-project:hover {
+  color: var(--accent-hover);
+  background-color: var(--accent-dim);
+}
+
+.btn-icon__label {
+  font-weight: 500;
+}
+
+/* Main workspace */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2.5rem;
+}
+
+.main-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: var(--content-width);
+  margin-bottom: 3rem;
+}
+
+.main-header__label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+  margin-bottom: 0.35rem;
+}
+
+.main-header__title {
+  font-size: 2.25rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.btn--primary {
+  flex-shrink: 0;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--bg);
+  background-color: var(--text);
+  border-radius: var(--radius);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn--primary:hover {
+  background-color: var(--accent-hover);
+  color: var(--bg);
+}
+
+.main-body {
+  flex: 1;
+  max-width: var(--content-width);
+}
+
+/* Typographic empty state — no card box */
+.empty-state {
+  padding: 2rem 0;
+  border-top: 1px dashed var(--border);
+}
+
+.empty-state__mark {
+  display: block;
+  color: var(--accent);
+  font-size: 1.25rem;
+  margin-bottom: 1.25rem;
+  opacity: 0.6;
+}
+
+.empty-state__title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state__text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  max-width: 22rem;
+}
+
+.empty-state__text strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Footer */
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2.5rem 0 1.75rem;
+  font-size: 0.75rem;
+  color: var(--text-faint);
+}
+
+.app-footer__copy {
+  margin: 0;
+}
+
+.app-footer__github {
+  display: flex;
+  color: var(--text-muted);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.app-footer__github:hover {
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.app-footer__github-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}

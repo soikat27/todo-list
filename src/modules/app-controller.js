@@ -2,7 +2,7 @@ import Project from "./project.js";
 import Todo from "./todo.js";
 
 const appController = (() => {
-    const defaultProject = new Project("Default");
+    const defaultProject = new Project("default");
     let projects = [defaultProject];
     let curProject = defaultProject;
 
@@ -61,7 +61,7 @@ const appController = (() => {
         createProject.removeTodo(todoId);
     }
 
-    return {projects, getAllProjects, getCurrentProject, selectProject, createProject, deleteProject, addTodo, removeTodo};
+    return {projects, getAllProjects, getCurrentProject, selectProject, createProject, deleteProject, addTodo, removeTodo, updateProject};
 })();
 
 export default appController;

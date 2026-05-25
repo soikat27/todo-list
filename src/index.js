@@ -4,6 +4,7 @@ import "./styles/style.css";
 import Todo from "./modules/todo.js";
 import Project from "./modules/project.js";
 import AppController from "./modules/app-controller.js";
+import UiController from "./modules/ui-controller.js";
 // import ChecklistItem from "./modules/checklist-item.js";
 
 // const todo = new Todo("title", "desc", "2016-12-11", "low");

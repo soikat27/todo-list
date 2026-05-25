@@ -15,7 +15,7 @@
             <span class="app-name">stay<span class="app-name__accent">Listed</span></span>
         </header>
 
-        <nav class="project-rail" aria-label="Projects">
+        <nav class="project-rail">
             <ul class="project-list">
                 <li>
                     <button type="button" class="project-item project-item--active">
@@ -29,6 +29,27 @@
             </button>
         </nav>
 
+        <dialog class="project-modal">
+            <form class="project-modal__form">
+                <header class="project-modal__header">
+                    <div>
+                        <p class="project-modal__eyebrow">New project</p>
+                        <h2 class="project-modal__title" id="project-modal-title">Create a new project</h2>
+                    </div>
+                </header>
+
+                <label class="project-modal__field" for="project-title">
+                    <span>Project name</span>
+                    <input id="project-title" name="project-title" type="text" placeholder="e.g. Study plan" autocomplete="off">
+                </label>
+
+                <div class="project-modal__actions">
+                    <button type="button" class="btn btn--secondary">Cancel</button>
+                    <button type="submit" class="btn btn--primary">Create project</button>
+                </div>
+            </form>
+        </dialog>
+        
         <main class="main">
             <header class="main-header">
                 <div class="main-header__intro">

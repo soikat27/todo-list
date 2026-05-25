@@ -20,16 +20,39 @@ const uiController = (() => {
     }
 
     function addProject(event) {
+        event.preventDefault();
 
-        AppController.createProject()
+        const projectTitle = document.getElementById("project-title").value;
+        AppController.createProject(projectTitle);
+        displayProjects();
+        
+        document.querySelector(".project-modal").close();
+        document.querySelector(".project-modal__form").reset();
     }
 
     function setEventListeners() {
+        // open/close dialog for adding/canceling a new project
         const addProjectBtn = document.querySelector(".btn-icon--add-project");
         const addProjectDialog = document.querySelector(".project-modal");
         addProjectBtn.addEventListener("click", () => {
             addProjectDialog.showModal();
         });
+        document.querySelector(".cancel-project").addEventListener("click", () => {
+            addProjectDialog.close();
+            document.querySelector(".project-modal__form").reset();
+        })
+
+
+        // add project to the project-rail
+        const projectModalForm = document.querySelector(".project-modal__form");
+        projectModalForm.addEventListener("submit", addProject);
     }
-    setEventListeners();
+
+    function initializeApp() {
+        setEventListeners();
+    }
+    
+    return {initializeApp};
 })();
+
+export default uiController;

@@ -21,8 +21,10 @@ const appController = (() => {
     }
 
     function createProject (title) {
-        const project = new Project(title);
-        projects.push(project);
+        if (title.trim()) {
+            const project = new Project(title);
+            projects.push(project);
+        }
     }
 
     function deleteProject(projectId) {

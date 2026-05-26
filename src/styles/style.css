@@ -334,9 +334,103 @@ button:focus-visible {
 .main-body {
   flex: 1;
   max-width: var(--content-width);
+  padding-top: 2rem;
+  border-top: 1px dotted var(--border);
 }
 
-/* Typographic empty state — no card box */
+/* Todo list */
+.todo-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.todo-card {
+  color: var(--text);
+  background-color: var(--bg-rail);
+  border: 1px solid var(--border-soft);
+  border-radius: calc(var(--radius) + 4px);
+  overflow: hidden;
+}
+
+.todo-card[open] {
+  border-color: var(--border);
+}
+
+.todo-card__summary {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.todo-card__summary::-webkit-details-marker {
+  display: none;
+}
+
+.todo-card__summary:hover {
+  background-color: var(--bg-hover);
+}
+
+.todo-card__check {
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.todo-card__content {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.todo-card__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.todo-card__meta {
+  color: var(--text-faint);
+  font-size: 0.78rem;
+}
+
+.todo-card__priority {
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.todo-card__priority--high {
+  color: var(--danger-hover);
+  background-color: var(--danger-dim);
+}
+
+.todo-card__details {
+  display: grid;
+  gap: 1rem;
+  padding: 0 1rem 1rem 2.75rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.todo-card__description {
+  padding-top: 1rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.todo-card__actions {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+/*
 .empty-state {
   padding: 2rem 0;
   border-top: 1px dashed var(--border);
@@ -367,6 +461,7 @@ button:focus-visible {
   color: var(--text);
   font-weight: 500;
 }
+*/
 
 /* Footer */
 .app-footer {

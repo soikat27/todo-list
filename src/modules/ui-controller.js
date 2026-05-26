@@ -3,6 +3,13 @@ import AppController from "./app-controller.js";
 
 const uiController = (() => {
 
+    function updateDisplay() {
+        displayProjects();
+        // update display associates concerning current project
+        updateCurrentProjectUI();
+
+    }
+    
     function displayProjects() {
         const projectList = document.querySelector("ul.project-list");
         projectList.innerHTML = "";
@@ -17,10 +24,7 @@ const uiController = (() => {
             `;
 
             projectList.insertAdjacentHTML("beforeend", html);
-        });   
-
-        // update display associates concerning current project
-        updateCurrentProjectUI();
+        });
     }
 
     function updateCurrentProjectUI() {
@@ -38,12 +42,16 @@ const uiController = (() => {
         updateBtn.classList.toggle("hidden", isDefaultProject);
     }
 
+    function displayTodo() {
+
+    }
+
     function selectProject(event) {
         const project = event.target.closest(".project-item");
         if (project) {
             const projectId = project.dataset.id;
             AppController.selectProject(projectId);
-            displayProjects();
+            updateDisplay();
         }
     }
 
@@ -52,7 +60,7 @@ const uiController = (() => {
 
         const projectTitle = document.getElementById("project-title").value;
         AppController.createProject(projectTitle);
-        displayProjects();
+        updateDisplay();
         
         document.querySelector(".add-project-modal").close();
         document.querySelector(".add-project-modal__form").reset();
@@ -63,7 +71,7 @@ const uiController = (() => {
 
         const project = AppController.getCurrentProject();
         AppController.deleteProject(project.id);
-        displayProjects();
+        updateDisplay();
 
         document.querySelector(".delete-project-modal").close();
     }
@@ -74,7 +82,7 @@ const uiController = (() => {
         const updatedTitle = document.getElementById("updated-project-title").value;
         const projectId = AppController.getCurrentProject().id;
         AppController.updateProject(projectId, updatedTitle);
-        displayProjects();
+        updateDisplay();
 
         document.querySelector(".update-project-modal").close();
         document.querySelector(".update-project-modal__form").reset();
@@ -132,7 +140,7 @@ const uiController = (() => {
 
     function initializeApp() {
         setEventListeners();
-        displayProjects();
+        updateDisplay();
     }
     
     return {initializeApp};

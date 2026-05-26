@@ -106,13 +106,41 @@
             </header>
 
             <div class="main-body">
-                <div class="empty-state">
+                <!-- empty todo UI -->
+                <div class="empty-state hidden">
                     <span class="empty-state__mark">—</span>
                     <p class="empty-state__title">No tasks yet</p>
                     <p class="empty-state__text">
                         This board is clear. Hit <strong>Add task</strong> when you are ready.
                     </p>
                 </div>
+               
+                <!-- todo lists start here -->
+                <section class="todo-list">
+                    <details class="todo-card">
+                        <summary class="todo-card__summary">
+                            <span class="todo-card__check"></span>
+                            <span class="todo-card__content">
+                                <span class="todo-card__title">Finish todo app layout</span>
+                                <span class="todo-card__meta">
+                                    Due <time datetime="2026-05-31">May 31</time>
+                                </span>
+                            </span>
+                            <span class="todo-card__priority todo-card__priority--high">High</span>
+                        </summary>
+
+                        <div class="todo-card__details">
+                            <p class="todo-card__description">
+                                Build the static todo card, keep the interface clean, and prepare the markup for future JavaScript behavior.
+                            </p>
+
+                            <div class="todo-card__actions">
+                                <button type="button" class="btn btn--secondary">Edit todo</button>
+                                <button type="button" class="btn btn--danger">Delete todo</button>
+                            </div>
+                        </div>
+                    </details>
+                </section>
             </div>
         </main>
 

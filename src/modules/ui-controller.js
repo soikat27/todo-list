@@ -33,6 +33,9 @@ const uiController = (() => {
         const deleteBtn = document.querySelector(".btn--danger");
         deleteBtn.classList.toggle("hidden", isDefaultProject);
 
+        // update "update-project" button
+        const updateBtn = document.querySelector(".btn-icon--update-project");
+        updateBtn.classList.toggle("hidden", isDefaultProject);
     }
 
     function selectProject(event) {
@@ -51,8 +54,8 @@ const uiController = (() => {
         AppController.createProject(projectTitle);
         displayProjects();
         
-        document.querySelector(".project-modal").close();
-        document.querySelector(".project-modal__form").reset();
+        document.querySelector(".add-project-modal").close();
+        document.querySelector(".add-project-modal__form").reset();
     }
 
     function deleteProject(event) {
@@ -61,21 +64,33 @@ const uiController = (() => {
         displayProjects();
     }
 
+    function updateProject(event) {
+        event.preventDefault();
+
+        const updatedTitle = document.getElementById("updated-project-title").value;
+        const projectId = AppController.getCurrentProject().id;
+        AppController.updateProject(projectId, updatedTitle);
+        displayProjects();
+
+        document.querySelector(".update-project-modal").close();
+        document.querySelector(".update-project-modal__form").reset();
+    }
+
     function setEventListeners() {
         // open/close dialog for adding/canceling a new project
         const addProjectBtn = document.querySelector(".btn-icon--add-project");
-        const addProjectDialog = document.querySelector(".project-modal");
+        const addProjectDialog = document.querySelector(".add-project-modal");
         addProjectBtn.addEventListener("click", () => {
             addProjectDialog.showModal();
         });
         document.querySelector(".cancel-project").addEventListener("click", () => {
             addProjectDialog.close();
-            document.querySelector(".project-modal__form").reset();
+            document.querySelector(".add-project-modal__form").reset();
         })
 
         // add project to the project-rail
-        const projectModalForm = document.querySelector(".project-modal__form");
-        projectModalForm.addEventListener("submit", addProject);
+        const addProjectForm = document.querySelector(".project-modal__form");
+        addProjectForm.addEventListener("submit", addProject);
 
         // select project
         const projectList = document.querySelector("ul.project-list");
@@ -84,6 +99,21 @@ const uiController = (() => {
         // delete project
         const deleteProjectBtn = document.querySelector(".btn--danger");
         deleteProjectBtn.addEventListener("click", deleteProject);
+
+        // open/close dialog for updating/canceling a project
+        const updateProjectBtn = document.querySelector(".btn-icon--update-project");
+        const updateProjectDialog = document.querySelector(".update-project-modal");
+        updateProjectBtn.addEventListener("click", () => {
+            updateProjectDialog.showModal();
+        });
+        document.querySelector(".cancel-update-project").addEventListener("click", () => {
+            updateProjectDialog.close();
+            document.querySelector(".update-project-modal__form").reset();
+        })
+
+        // update project
+        const updateProjectForm = document.querySelector(".update-project-modal__form");
+        updateProjectForm.addEventListener("submit", updateProject);
     }
 
     function initializeApp() {

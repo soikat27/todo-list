@@ -47,7 +47,7 @@ const appController = (() => {
     function updateProject(projectId, newTitle) {
         const project = projects.find(item => item.id === projectId);
 
-        if (project)
+        if (!project)
             return false;
         if (project === defaultProject) {
             alert("Default project can't be updated!");

@@ -68,6 +68,29 @@
                 </div>
             </form>
         </dialog>
+
+        <!-- delete project confirmation dialog modal -->
+        <dialog class="project-modal delete-project-modal">
+            <form class="project-modal__form delete-project-modal__form">
+                <header class="project-modal__header">
+                    <div>
+                        <p class="project-modal__eyebrow project-modal__eyebrow--danger">Delete project</p>
+                        <h2 class="project-modal__title" id="delete-project-modal-title">Are you sure?</h2>
+                    </div>
+                </header>
+
+                <p class="project-modal__message">
+                    This will permanently delete
+                    <span class="delete-project-modal__name">this project</span>
+                    and all of its tasks.
+                </p>
+
+                <div class="project-modal__actions">
+                    <button type="button" class="btn btn--secondary cancel-delete-project">Cancel</button>
+                    <button type="submit" class="btn btn--danger-solid confirm-delete-project">Delete project</button>
+                </div>
+            </form>
+        </dialog>
         
         <main class="main">
             <header class="main-header">

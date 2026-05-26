@@ -213,6 +213,22 @@ button:focus-visible {
   background-color: var(--danger-dim);
 }
 
+.btn--danger-solid {
+  flex-shrink: 0;
+  padding: 0.55rem 1rem;
+  color: var(--bg);
+  background-color: var(--danger);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: var(--radius);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn--danger-solid:hover {
+  color: var(--bg);
+  background-color: var(--danger-hover);
+}
+
 .hidden {
   display: none;
 }
@@ -249,10 +265,25 @@ button:focus-visible {
   text-transform: uppercase;
 }
 
+.project-modal__eyebrow--danger {
+  color: var(--danger);
+}
+
 .project-modal__title {
   font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: -0.03em;
+}
+
+.project-modal__message {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.delete-project-modal__name {
+  color: var(--text);
+  font-weight: 600;
 }
 
 .project-modal__field {

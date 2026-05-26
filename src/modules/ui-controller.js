@@ -59,9 +59,13 @@ const uiController = (() => {
     }
 
     function deleteProject(event) {
+        event.preventDefault();
+
         const project = AppController.getCurrentProject();
         AppController.deleteProject(project.id);
         displayProjects();
+
+        document.querySelector(".delete-project-modal").close();
     }
 
     function updateProject(event) {
@@ -96,9 +100,19 @@ const uiController = (() => {
         const projectList = document.querySelector("ul.project-list");
         projectList.addEventListener("click", selectProject);
 
-        // delete project
+        // open/close dialog for deleting projects
         const deleteProjectBtn = document.querySelector(".btn--danger");
-        deleteProjectBtn.addEventListener("click", deleteProject);
+        const deleteProjectDialog = document.querySelector(".delete-project-modal");
+        deleteProjectBtn.addEventListener("click", () => {
+            deleteProjectDialog.showModal();
+        });
+        document.querySelector(".cancel-delete-project").addEventListener("click", () => {
+            deleteProjectDialog.close();
+        })
+
+        // delete project
+        const deleteProjectForm = document.querySelector(".delete-project-modal");
+        deleteProjectForm.addEventListener("submit", deleteProject);
 
         // open/close dialog for updating/canceling a project
         const updateProjectBtn = document.querySelector(".btn-icon--update-project");

@@ -91,6 +91,57 @@
                 </div>
             </form>
         </dialog>
+
+        <!-- add-a-todo dialog modal -->
+        <dialog class="project-modal todo-modal add-todo-modal">
+            <form class="project-modal__form add-todo-modal__form">
+                <header class="project-modal__header">
+                    <div>
+                        <p class="project-modal__eyebrow">New todo</p>
+                        <h2 class="project-modal__title" id="add-todo-modal-title">Add a task</h2>
+                    </div>
+                </header>
+
+                <label class="project-modal__field" for="todo-title">
+                    <span>Title</span>
+                    <input id="todo-title" name="todo-title" type="text" placeholder="e.g. Finish project draft" autocomplete="off" required>
+                </label>
+
+                <label class="project-modal__field" for="todo-description">
+                    <span>Description</span>
+                    <textarea id="todo-description" name="todo-description" rows="3" placeholder="What needs to get done?"></textarea>
+                </label>
+
+                <label class="project-modal__field" for="todo-due-date">
+                    <span>Due date</span>
+                    <input id="todo-due-date" name="todo-due-date" type="date" required>
+                </label>
+
+                <label class="project-modal__field" for="todo-priority">
+                    <span>Priority</span>
+                    <select id="todo-priority" name="todo-priority" required>
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </label>
+
+                <label class="project-modal__field" for="todo-notes">
+                    <span>Notes (optional)</span>
+                    <textarea id="todo-notes" name="todo-notes" rows="3" placeholder="Extra context, reminders, or links"></textarea>
+                </label>
+
+                <label class="project-modal__field" for="todo-checklist">
+                    <span>Checklist (optional)</span>
+                    <textarea id="todo-checklist" name="todo-checklist" rows="4" placeholder="One checklist item per line"></textarea>
+                </label>
+
+                <div class="project-modal__actions">
+                    <button type="button" class="btn btn--secondary cancel-todo">Cancel</button>
+                    <button type="submit" class="btn btn--primary">Create todo</button>
+                </div>
+            </form>
+        </dialog>
         
         <main class="main">
             <header class="main-header">
@@ -101,13 +152,13 @@
                 <div class="main-header__actions">
                     <button type="button" class="btn btn--danger">Delete project</button>
                     <button type="button" class="btn btn--secondary btn-icon--update-project">Update project</button>
-                    <button type="button" class="btn btn--primary">Add task</button>
+                    <button type="button" class="btn btn--primary btn-icon--add-todo">Add task</button>
                 </div>
             </header>
 
             <div class="main-body">
                 <!-- empty todo UI -->
-                <div class="empty-state hidden">
+                <div class="empty-state">
                     <span class="empty-state__mark">—</span>
                     <p class="empty-state__title">No tasks yet</p>
                     <p class="empty-state__text">
@@ -130,9 +181,30 @@
                         </summary>
 
                         <div class="todo-card__details">
-                            <p class="todo-card__description">
-                                Build the static todo card, keep the interface clean, and prepare the markup for future JavaScript behavior.
-                            </p>
+                            <section class="todo-card__section">
+                                <h3 class="todo-card__section-title">Notes</h3>
+                                <p class="todo-card__notes">
+                                    Keep the UI simple, readable, and ready for dynamic rendering later.
+                                </p>
+                            </section>
+
+                            <section class="todo-checklist" aria-label="Checklist">
+                                <h3 class="todo-card__section-title">Checklist</h3>
+                                <ul class="todo-checklist__list">
+                                    <li class="todo-checklist__item">
+                                        <span class="todo-checklist__dot" aria-hidden="true"></span>
+                                        Add todo card HTML
+                                    </li>
+                                    <li class="todo-checklist__item">
+                                        <span class="todo-checklist__dot" aria-hidden="true"></span>
+                                        Style expanded details
+                                    </li>
+                                    <li class="todo-checklist__item">
+                                        <span class="todo-checklist__dot" aria-hidden="true"></span>
+                                        Wire logic later
+                                    </li>
+                                </ul>
+                            </section>
 
                             <div class="todo-card__actions">
                                 <button type="button" class="btn btn--secondary">Edit todo</button>

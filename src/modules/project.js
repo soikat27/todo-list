@@ -19,6 +19,10 @@ export default class Project {
             return todo;
     }
 
+    getAllTodos() {
+        return [...this.todoList];
+    }
+
     updateProject(newTitle) {
         this.title = newTitle;
     }

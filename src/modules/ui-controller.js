@@ -40,6 +40,11 @@ const uiController = (() => {
         // update "update-project" button
         const updateBtn = document.querySelector(".btn-icon--update-project");
         updateBtn.classList.toggle("hidden", isDefaultProject);
+
+        // show empty state if currentProject-todolist is empty
+        const isEmptyTodo = AppController.getCurrentProject().todoList === 0;
+        const emptyState = document.querySelector(".empty-state");
+        emptyState.classList.toggle("hidden", isEmptyTodo);
     }
 
     function displayTodo() {
@@ -86,6 +91,10 @@ const uiController = (() => {
 
         document.querySelector(".update-project-modal").close();
         document.querySelector(".update-project-modal__form").reset();
+    }
+
+    function addTodo(event) {
+
     }
 
     function setEventListeners() {
@@ -136,6 +145,17 @@ const uiController = (() => {
         // update project
         const updateProjectForm = document.querySelector(".update-project-modal__form");
         updateProjectForm.addEventListener("submit", updateProject);
+
+        // open/close dialog for adding/canceling a todo-item to current project
+        const addTodoBtn = document.querySelector(".btn-icon--add-todo");
+        const addTodoDialog = document.querySelector(".add-todo-modal");
+        addTodoBtn.addEventListener("click", () => {
+            addTodoDialog.showModal();
+        });
+        document.querySelector(".cancel-todo").addEventListener("click", () => {
+            addTodoDialog.close();
+            document.querySelector(".add-todo-modal__form").reset();
+        })
     }
 
     function initializeApp() {

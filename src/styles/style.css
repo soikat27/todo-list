@@ -7,6 +7,9 @@
   --accent: #a78bfa;
   --accent-dim: rgba(167, 139, 250, 0.12);
   --accent-hover: #c4b5fd;
+  --danger: #f87171;
+  --danger-dim: rgba(248, 113, 113, 0.12);
+  --danger-hover: #fecaca;
   --text: #ececee;
   --text-muted: #71717a;
   --text-faint: #52525b;
@@ -172,6 +175,13 @@ button:focus-visible {
   line-height: 1.1;
 }
 
+.main-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
 .btn--primary {
   flex-shrink: 0;
   padding: 0.55rem 1.1rem;
@@ -186,6 +196,21 @@ button:focus-visible {
 .btn--primary:hover {
   background-color: var(--accent-hover);
   color: var(--bg);
+}
+
+.btn--danger {
+  flex-shrink: 0;
+  padding: 0.55rem 1rem;
+  color: var(--danger);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: var(--radius);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn--danger:hover {
+  color: var(--danger-hover);
+  background-color: var(--danger-dim);
 }
 
 /* Add project dialog */

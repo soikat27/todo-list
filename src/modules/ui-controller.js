@@ -17,6 +17,19 @@ const uiController = (() => {
 
             projectList.insertAdjacentHTML("beforeend", html);
         });
+
+        const curProjectTitle = document.querySelector(".main-header__title");
+        curProjectTitle.textContent = AppController.getCurrentProject().title;
+    }
+
+    function selectProject(event) {
+        const project = event.target.closest(".project-item");
+        if (project) {
+            const projectId = project.dataset.id;
+            AppController.selectProject(projectId);
+
+            displayProjects();
+        }
     }
 
     function addProject(event) {
@@ -42,14 +55,18 @@ const uiController = (() => {
             document.querySelector(".project-modal__form").reset();
         })
 
-
         // add project to the project-rail
         const projectModalForm = document.querySelector(".project-modal__form");
         projectModalForm.addEventListener("submit", addProject);
+
+        // select project
+        const projectList = document.querySelector("ul.project-list");
+        projectList.addEventListener("click", selectProject);
     }
 
     function initializeApp() {
         setEventListeners();
+        displayProjects();
     }
     
     return {initializeApp};

@@ -17,11 +17,11 @@
 
         <nav class="project-rail">
             <ul class="project-list">
-                <li>
+                <!-- <li>
                     <button type="button" class="project-item project-item--active">
                         <span class="project-item__name">default</span>
                     </button>
-                </li>
+                </li> -->
             </ul>
             <button type="button" class="btn-icon btn-icon--add-project">
                 <span>+</span>
@@ -54,9 +54,12 @@
             <header class="main-header">
                 <div class="main-header__intro">
                     <p class="main-header__label">Current project</p>
-                    <h1 class="main-header__title">default</h1>
+                    <h1 class="main-header__title"></h1>
                 </div>
-                <button type="button" class="btn btn--primary">Add task</button>
+                <div class="main-header__actions">
+                    <button type="button" class="btn btn--danger">Delete project</button>
+                    <button type="button" class="btn btn--primary">Add task</button>
+                </div>
             </header>
 
             <div class="main-body">

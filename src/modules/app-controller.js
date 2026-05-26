@@ -14,6 +14,10 @@ const appController = (() => {
         return curProject;
     }
 
+    function getDefaultProject() {
+        return defaultProject;
+    }
+
     function selectProject(projectId) {
         const project = projects.find(item => item.id === projectId);
         if (project)
@@ -63,7 +67,7 @@ const appController = (() => {
         createProject.removeTodo(todoId);
     }
 
-    return {projects, getAllProjects, getCurrentProject, selectProject, createProject, deleteProject, addTodo, removeTodo, updateProject};
+    return {getAllProjects, getCurrentProject, getDefaultProject, selectProject, createProject, deleteProject, addTodo, removeTodo, updateProject};
 })();
 
 export default appController;

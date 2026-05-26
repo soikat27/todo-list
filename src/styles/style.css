@@ -213,6 +213,10 @@ button:focus-visible {
   background-color: var(--danger-dim);
 }
 
+.hidden {
+  display: none;
+}
+
 /* Add project dialog */
 .project-modal {
   width: min(100% - 2rem, 26rem);

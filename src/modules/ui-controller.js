@@ -1,3 +1,4 @@
+import appController from "./app-controller.js";
 import AppController from "./app-controller.js";
 
 const uiController = (() => {
@@ -16,10 +17,22 @@ const uiController = (() => {
             `;
 
             projectList.insertAdjacentHTML("beforeend", html);
-        });
+        });   
 
+        // update display associates concerning current project
+        updateCurrentProjectUI();
+    }
+
+    function updateCurrentProjectUI() {
+        // update current project title
         const curProjectTitle = document.querySelector(".main-header__title");
         curProjectTitle.textContent = AppController.getCurrentProject().title;
+
+        // update delete button
+        const isDefaultProject = AppController.getCurrentProject() === AppController.getDefaultProject();
+        const deleteBtn = document.querySelector(".btn--danger");
+        deleteBtn.classList.toggle("hidden", isDefaultProject);
+
     }
 
     function selectProject(event) {
@@ -27,7 +40,6 @@ const uiController = (() => {
         if (project) {
             const projectId = project.dataset.id;
             AppController.selectProject(projectId);
-
             displayProjects();
         }
     }
@@ -41,6 +53,12 @@ const uiController = (() => {
         
         document.querySelector(".project-modal").close();
         document.querySelector(".project-modal__form").reset();
+    }
+
+    function deleteProject(event) {
+        const project = AppController.getCurrentProject();
+        AppController.deleteProject(project.id);
+        displayProjects();
     }
 
     function setEventListeners() {
@@ -62,6 +80,10 @@ const uiController = (() => {
         // select project
         const projectList = document.querySelector("ul.project-list");
         projectList.addEventListener("click", selectProject);
+
+        // delete project
+        const deleteProjectBtn = document.querySelector(".btn--danger");
+        deleteProjectBtn.addEventListener("click", deleteProject);
     }
 
     function initializeApp() {

@@ -120,9 +120,9 @@
                 <label class="project-modal__field" for="todo-priority">
                     <span>Priority</span>
                     <select id="todo-priority" name="todo-priority" required>
-                        <option value="low">Low</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="high">High</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
                     </select>
                 </label>
 
@@ -168,7 +168,7 @@
                
                 <!-- todo lists start here -->
                 <section class="todo-list">
-                    <details class="todo-card">
+                    <!-- <details class="todo-card">
                         <summary class="todo-card__summary">
                             <span class="todo-card__check"></span>
                             <span class="todo-card__content">
@@ -182,8 +182,15 @@
 
                         <div class="todo-card__details">
                             <section class="todo-card__section">
+                                <h3 class="todo-card__section-title">Description</h3>
+                                <p class="todo-card__text">
+                                    Build the static todo card, keep the interface clean, and prepare the markup for future JavaScript behavior.
+                                </p>
+                            </section>
+
+                            <section class="todo-card__section">
                                 <h3 class="todo-card__section-title">Notes</h3>
-                                <p class="todo-card__notes">
+                                <p class="todo-card__text">
                                     Keep the UI simple, readable, and ready for dynamic rendering later.
                                 </p>
                             </section>
@@ -192,15 +199,15 @@
                                 <h3 class="todo-card__section-title">Checklist</h3>
                                 <ul class="todo-checklist__list">
                                     <li class="todo-checklist__item">
-                                        <span class="todo-checklist__dot" aria-hidden="true"></span>
+                                        <span class="todo-checklist__dot"></span>
                                         Add todo card HTML
                                     </li>
                                     <li class="todo-checklist__item">
-                                        <span class="todo-checklist__dot" aria-hidden="true"></span>
+                                        <span class="todo-checklist__dot"></span>
                                         Style expanded details
                                     </li>
                                     <li class="todo-checklist__item">
-                                        <span class="todo-checklist__dot" aria-hidden="true"></span>
+                                        <span class="todo-checklist__dot"></span>
                                         Wire logic later
                                     </li>
                                 </ul>
@@ -211,7 +218,7 @@
                                 <button type="button" class="btn btn--danger">Delete todo</button>
                             </div>
                         </div>
-                    </details>
+                    </details> -->
                 </section>
             </div>
         </main>

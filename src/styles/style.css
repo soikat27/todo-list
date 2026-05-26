@@ -456,7 +456,7 @@ button:focus-visible {
   text-transform: uppercase;
 }
 
-.todo-card__notes {
+.todo-card__text {
   color: var(--text-muted);
   font-size: 0.9rem;
   line-height: 1.65;

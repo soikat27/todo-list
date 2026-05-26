@@ -1,5 +1,6 @@
 import appController from "./app-controller.js";
 import AppController from "./app-controller.js";
+import { parseISO, format } from "date-fns";
 
 const uiController = (() => {
 
@@ -7,7 +8,8 @@ const uiController = (() => {
         displayProjects();
         // update display associates concerning current project
         updateCurrentProjectUI();
-
+        // display all todos
+        displayTodos();
     }
     
     function displayProjects() {
@@ -42,13 +44,74 @@ const uiController = (() => {
         updateBtn.classList.toggle("hidden", isDefaultProject);
 
         // show empty state if currentProject-todolist is empty
-        const isEmptyTodo = AppController.getCurrentProject().todoList === 0;
+        const isEmptyTodo = AppController.getCurrentProject().todoList.length === 0;
         const emptyState = document.querySelector(".empty-state");
-        emptyState.classList.toggle("hidden", isEmptyTodo);
+        emptyState.classList.toggle("hidden", !isEmptyTodo);
     }
 
-    function displayTodo() {
+    function displayTodos() {
+        const todoList = document.querySelector(".todo-list");
+        todoList.innerHTML = "";
 
+        AppController.getCurrentProject().getAllTodos().forEach(todo => {
+            const html = `
+                <details class="todo-card">
+                    <summary class="todo-card__summary">
+                        <span class="todo-card__check"></span>
+                        <span class="todo-card__content">
+                            <span class="todo-card__title">${todo.title}</span>
+                            <span class="todo-card__meta">
+                                Due <time datetime="${todo.dueDate}">${format(parseISO(todo.dueDate), "MMM d, yyyy")}</time>
+                            </span>
+                        </span>
+                        <span class="todo-card__priority todo-card__priority--high">${todo.priority}</span>
+                    </summary>
+
+                    <div class="todo-card__details">
+                        <section class="todo-card__section">
+                            <h3 class="todo-card__section-title">Description</h3>
+                            <p class="todo-card__text">
+                                ${todo.description}
+                            </p>
+                        </section>
+
+                        <section class="todo-card__section">
+                            <h3 class="todo-card__section-title">Notes</h3>
+                            <p class="todo-card__text">
+                                ${todo.notes}
+                            </p>
+                        </section>
+                        
+                        <section class="todo-checklist">
+                            <h3 class="todo-card__section-title">Checklist</h3>
+                            <ul class="todo-checklist__list">
+                                
+                            </ul>
+                        </section>
+
+                        <div class="todo-card__actions">
+                            <button type="button" class="btn btn--secondary">Edit todo</button>
+                            <button type="button" class="btn btn--danger">Delete todo</button>
+                        </div>
+                    </div>
+                </details>
+            `;
+
+            todoList.insertAdjacentHTML("beforeend", html);
+
+            // add checkList
+            const checklist = document.querySelector(".todo-checklist__list");
+            todo.checklist.forEach(checkList => {
+                const html = `
+                    <li class="todo-checklist__item">
+                        <span class="todo-checklist__dot"></span>
+                        ${checkList}
+                    </li>
+                `
+
+                checklist.insertAdjacentHTML("beforeend", html);
+            }) 
+        });
     }
 
     function selectProject(event) {
@@ -94,7 +157,20 @@ const uiController = (() => {
     }
 
     function addTodo(event) {
+        event.preventDefault();
 
+        const title       = document.getElementById("todo-title").value;
+        const description = document.getElementById("todo-description").value;
+        const dueDate     = document.getElementById("todo-due-date").value;
+        const priority    = document.getElementById("todo-priority").value;
+        const notes       = document.getElementById("todo-notes").value;
+        const checklist   = document.getElementById("todo-checklist").value.split("\n");
+
+        AppController.addTodo(title, description, dueDate, priority, notes, checklist);
+        updateDisplay();
+
+        document.querySelector(".add-todo-modal").close();
+        document.querySelector(".add-todo-modal__form").reset();
     }
 
     function setEventListeners() {
@@ -156,6 +232,10 @@ const uiController = (() => {
             addTodoDialog.close();
             document.querySelector(".add-todo-modal__form").reset();
         })
+
+        // add todo-item to current project
+        const addTodoForm = document.querySelector(".add-todo-modal__form");
+        addTodoForm.addEventListener("submit", addTodo);
     }
 
     function initializeApp() {

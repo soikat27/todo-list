@@ -25,7 +25,7 @@ const appController = (() => {
     }
 
     function createProject (title) {
-        if (title.trim()) {
+        if (title) {
             const project = new Project(title);
             projects.push(project);
         }

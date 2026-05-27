@@ -55,7 +55,7 @@ const uiController = (() => {
 
         AppController.getCurrentProject().getAllTodos().forEach(todo => {
             const html = `
-                <details class="todo-card">
+                <details class="todo-card" data-id="${todo.id}">
                     <summary class="todo-card__summary">
                         <span class="todo-card__check"></span>
                         <span class="todo-card__content">
@@ -74,43 +74,59 @@ const uiController = (() => {
                                 ${todo.description}
                             </p>
                         </section>
-
-                        <section class="todo-card__section">
-                            <h3 class="todo-card__section-title">Notes</h3>
-                            <p class="todo-card__text">
-                                ${todo.notes}
-                            </p>
-                        </section>
-                        
-                        <section class="todo-checklist">
-                            <h3 class="todo-card__section-title">Checklist</h3>
-                            <ul class="todo-checklist__list">
-                                
-                            </ul>
-                        </section>
-
-                        <div class="todo-card__actions">
-                            <button type="button" class="btn btn--secondary">Edit todo</button>
-                            <button type="button" class="btn btn--danger">Delete todo</button>
-                        </div>
                     </div>
                 </details>
             `;
-
             todoList.insertAdjacentHTML("beforeend", html);
-
-            // add checkList
-            const checklist = document.querySelector(".todo-checklist__list");
-            todo.checklist.forEach(checkList => {
+ 
+            const cardDetails = document.querySelector(`details[data-id="${todo.id}"] .todo-card__details`);
+            // add notes (if any)
+            if (todo.notes) {
                 const html = `
-                    <li class="todo-checklist__item">
-                        <span class="todo-checklist__dot"></span>
-                        ${checkList}
-                    </li>
-                `
+                    <section class="todo-card__section">
+                        <h3 class="todo-card__section-title">Notes</h3>
+                        <p class="todo-card__text">
+                            ${todo.notes}
+                        </p>
+                    </section>
+                `;
+                cardDetails.insertAdjacentHTML("beforeend", html);
+            }
 
-                checklist.insertAdjacentHTML("beforeend", html);
-            }) 
+            // add checkList (if any)
+            if (todo.checklist.length > 0) {
+                // add skeletal body
+                const html = `
+                    <section class="todo-checklist">
+                        <h3 class="todo-card__section-title">Checklist</h3>
+                        <ul class="todo-checklist__list">
+                                
+                        </ul>
+                    </section>
+                `;
+                cardDetails.insertAdjacentHTML("beforeend", html);
+
+                // add checklist-items
+                const checklistDiv = document.querySelector(`details[data-id="${todo.id}"] .todo-checklist__list`);
+                todo.checklist.forEach(checkList => {
+                    const html = `
+                        <li class="todo-checklist__item">
+                            <span class="todo-checklist__dot"></span>
+                            ${checkList}
+                        </li>
+                    `;
+                    checklistDiv.insertAdjacentHTML("beforeend", html);
+                });
+            }
+            
+            // add actions buttons
+            const actionBtnHtml = `
+                <div class="todo-card__actions">
+                    <button type="button" class="btn btn--secondary">Edit todo</button>
+                    <button type="button" class="btn btn--danger">Delete todo</button>
+                </div>
+            `;
+            cardDetails.insertAdjacentHTML("beforeend", actionBtnHtml);
         });
     }
 
@@ -164,7 +180,7 @@ const uiController = (() => {
         const dueDate     = document.getElementById("todo-due-date").value;
         const priority    = document.getElementById("todo-priority").value;
         const notes       = document.getElementById("todo-notes").value;
-        const checklist   = document.getElementById("todo-checklist").value.split("\n");
+        const checklist   = document.getElementById("todo-checklist").value.split("\n").map(item => item.trim()).filter(item => item !== "");
 
         AppController.addTodo(title, description, dueDate, priority, notes, checklist);
         updateDisplay();

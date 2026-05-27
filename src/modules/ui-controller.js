@@ -122,7 +122,7 @@ const uiController = (() => {
             // add actions buttons
             const actionBtnHtml = `
                 <div class="todo-card__actions">
-                    <button type="button" class="btn btn--secondary">Edit todo</button>
+                    <button type="button" class="btn btn--secondary btn-edit">Edit todo</button>
                     <button type="button" class="btn btn--danger">Delete todo</button>
                 </div>
             `;
@@ -199,6 +199,28 @@ const uiController = (() => {
         });
     }
 
+    function updateTodo() {
+
+    }
+
+    function showUpdateTodoDialog(event) {
+        const updateBtn = event.target.closest(".btn-edit");
+        if (updateBtn) {
+            const todoId = event.target.closest(".todo-card").dataset.id;
+            const todo = AppController.getCurrentProject().getTodo(todoId);
+
+            document.getElementById("updated-todo-title").value = todo.title;
+            document.getElementById("updated-todo-description").value = todo.description;
+            document.getElementById("updated-todo-due-date").value = todo.dueDate;
+            document.getElementById("updated-todo-priority").value = todo.priority;
+            document.getElementById("updated-todo-notes").value = todo.notes;
+            document.getElementById("updated-todo-checklist").value = todo.checklist.join("\n");
+
+            const updateTodoDialog = document.querySelector(".update-todo-modal");
+            updateTodoDialog.showModal();   
+        }
+    }
+
     function setEventListeners() {
         // open/close dialog for adding/canceling a new project
         const addProjectBtn = document.querySelector(".btn-icon--add-project");
@@ -248,7 +270,7 @@ const uiController = (() => {
         const updateProjectForm = document.querySelector(".update-project-modal__form");
         updateProjectForm.addEventListener("submit", updateProject);
 
-        // open/close dialog for adding/canceling a todo-item to current project
+        // open/close dialog for adding/canceling a todo-item in current project
         const addTodoBtn = document.querySelector(".btn-icon--add-todo");
         const addTodoDialog = document.querySelector(".add-todo-modal");
         addTodoBtn.addEventListener("click", () => {
@@ -266,6 +288,18 @@ const uiController = (() => {
         // collapse previously selected card
         const todoList = document.querySelector(".todo-list");
         todoList.addEventListener("click", collapseTodoCard);
+
+        // open/close dialog for updating a todo-item
+        const updateTodoDialog = document.querySelector(".update-todo-modal");
+        todoList.addEventListener("click", showUpdateTodoDialog);
+        // updateTodoModal.addEventListener("click", (event) => {
+        //     if (event.target.closest(""))
+        //     addTodoDialog.showModal();
+        // });
+        // document.querySelector(".cancel-todo").addEventListener("click", () => {
+        //     addTodoDialog.close();
+        //     document.querySelector(".add-todo-modal__form").reset();
+        // })
     }
 
     function initializeApp() {

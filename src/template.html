@@ -142,7 +142,58 @@
                 </div>
             </form>
         </dialog>
-        
+
+        <!-- update-a-todo dialog modal -->
+        <dialog class="project-modal todo-modal update-todo-modal">
+            <form class="project-modal__form update-todo-modal__form">
+                <header class="project-modal__header">
+                    <div>
+                        <p class="project-modal__eyebrow">Edit todo</p>
+                        <h2 class="project-modal__title" id="update-todo-modal-title">Update task</h2>
+                    </div>
+                </header>
+
+                <label class="project-modal__field" for="updated-todo-title">
+                    <span>Title</span>
+                    <input id="updated-todo-title" name="updated-todo-title" type="text" placeholder="e.g. Finish project draft" autocomplete="off" required>
+                </label>
+
+                <label class="project-modal__field" for="updated-todo-description">
+                    <span>Description</span>
+                    <textarea id="updated-todo-description" name="updated-todo-description" rows="3" placeholder="What needs to get done?"></textarea>
+                </label>
+
+                <label class="project-modal__field" for="updated-todo-due-date">
+                    <span>Due date</span>
+                    <input id="updated-todo-due-date" name="updated-todo-due-date" type="date" required>
+                </label>
+
+                <label class="project-modal__field" for="updated-todo-priority">
+                    <span>Priority</span>
+                    <select id="updated-todo-priority" name="updated-todo-priority" required>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </label>
+
+                <label class="project-modal__field" for="updated-todo-notes">
+                    <span>Notes (optional)</span>
+                    <textarea id="updated-todo-notes" name="updated-todo-notes" rows="3" placeholder="Extra context, reminders, or links"></textarea>
+                </label>
+
+                <label class="project-modal__field" for="updated-todo-checklist">
+                    <span>Checklist (optional)</span>
+                    <textarea id="updated-todo-checklist" name="updated-todo-checklist" rows="4" placeholder="One checklist item per line"></textarea>
+                </label>
+
+                <div class="project-modal__actions">
+                    <button type="button" class="btn btn--secondary cancel-update-todo">Cancel</button>
+                    <button type="submit" class="btn btn--primary">Update todo</button>
+                </div>
+            </form>
+        </dialog>
+
         <main class="main">
             <header class="main-header">
                 <div class="main-header__intro">

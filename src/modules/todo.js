@@ -26,4 +26,13 @@ export default class Todo {
         if (checklistItem)
             checklistItem.toggleCompleted();
     }
+
+    updateTodo(newTitle, newDesc, newDueDate, newPriority, newNotes, newChecklist) {
+        this.title = newTitle.trim();
+        this.description = newDesc.trim();
+        this.dueDate = newDueDate.trim();
+        this.priority = newPriority;
+        this.notes = newNotes.trim();
+        this.checklist = newChecklist;
+    }
 }

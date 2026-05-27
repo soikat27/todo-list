@@ -189,6 +189,16 @@ const uiController = (() => {
         document.querySelector(".add-todo-modal__form").reset();
     }
 
+    function collapseTodoCard(event) {
+        const todoItem = event.target.closest("details");
+        if (!todoItem || todoItem.open)
+            return;
+
+        document.querySelectorAll("details").forEach(card => {
+            card.open = false;
+        });
+    }
+
     function setEventListeners() {
         // open/close dialog for adding/canceling a new project
         const addProjectBtn = document.querySelector(".btn-icon--add-project");
@@ -252,6 +262,10 @@ const uiController = (() => {
         // add todo-item to current project
         const addTodoForm = document.querySelector(".add-todo-modal__form");
         addTodoForm.addEventListener("submit", addTodo);
+
+        // collapse previously selected card
+        const todoList = document.querySelector(".todo-list");
+        todoList.addEventListener("click", collapseTodoCard);
     }
 
     function initializeApp() {

@@ -427,6 +427,17 @@ button:focus-visible {
   font-weight: 600;
 }
 
+.todo-card--completed .todo-card__title {
+  color: var(--text-muted);
+  text-decoration-line: line-through;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+.todo-card--completed .todo-card__meta {
+  opacity: 0.75;
+}
+
 .todo-card__meta {
   color: var(--text-faint);
   font-size: 0.78rem;

@@ -73,7 +73,13 @@ const appController = (() => {
             todo.updateTodo(newTitle, newDesc, newDueDate, newPriority, newNotes, newChecklist);
     }
 
-    return {getAllProjects, getCurrentProject, getDefaultProject, selectProject, createProject, deleteProject, addTodo, removeTodo, updateProject, updateTodo};
+    function toggleTodoCompleted(todoId) {
+        const todo = curProject.getTodo(todoId);
+        if (todo)
+            todo.toggleCompleted();
+    }
+
+    return {getAllProjects, getCurrentProject, getDefaultProject, selectProject, createProject, deleteProject, addTodo, removeTodo, updateProject, updateTodo, toggleTodoCompleted};
 })();
 
 export default appController;

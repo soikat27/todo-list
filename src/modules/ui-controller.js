@@ -247,6 +247,19 @@ const uiController = (() => {
         document.querySelector(".delete-todo-modal").close();
     }
 
+    function toggleTodoCompleted(event) {
+        const todoCheckBtn = event.target.closest(".todo-card__check");
+        if (todoCheckBtn) {
+            event.preventDefault();   // stop <summary> from toggling <details>
+            
+            const todoId = event.target.closest(".todo-card").dataset.id;
+            const todo = AppController.getCurrentProject().getTodo(todoId);
+            AppController.toggleTodoCompleted(todoId);
+
+            event.target.closest(".todo-card").classList.toggle("todo-card--completed", todo.completed);
+        }
+    }
+
     function setEventListeners() {
         // open/close dialog for adding/canceling a new project
         const addProjectBtn = document.querySelector(".btn-icon--add-project");
@@ -348,6 +361,9 @@ const uiController = (() => {
         // delete a todo
         const deleteTodoForm = document.querySelector(".delete-todo-modal__form");
         deleteTodoForm.addEventListener("submit", deleteTodo);
+
+        // toggle a todo complete status
+        todoList.addEventListener("click", toggleTodoCompleted);
     }
 
     function initializeApp() {

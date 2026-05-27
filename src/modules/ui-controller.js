@@ -199,8 +199,22 @@ const uiController = (() => {
         });
     }
 
-    function updateTodo() {
+    function updateTodo(event) {
+        event.preventDefault();
 
+        const title       = document.getElementById("updated-todo-title").value;
+        const description = document.getElementById("updated-todo-description").value;
+        const dueDate     = document.getElementById("updated-todo-due-date").value;
+        const priority    = document.getElementById("updated-todo-priority").value;
+        const notes       = document.getElementById("updated-todo-notes").value;
+        const checklist   = document.getElementById("updated-todo-checklist").value.split("\n").map(item => item.trim()).filter(item => item !== "");
+        
+        const todoId = event.currentTarget.dataset.todoId;
+        AppController.updateTodo(todoId, title, description, dueDate, priority, notes, checklist);
+        updateDisplay();
+
+        document.querySelector(".update-todo-modal").close();
+        document.querySelector(".update-todo-modal__form").reset();
     }
 
     function showUpdateTodoDialog(event) {
@@ -208,6 +222,8 @@ const uiController = (() => {
         if (updateBtn) {
             const todoId = event.target.closest(".todo-card").dataset.id;
             const todo = AppController.getCurrentProject().getTodo(todoId);
+            // store the id temporarily in update modal form
+            document.querySelector(".update-todo-modal__form").dataset.todoId = todoId;
 
             document.getElementById("updated-todo-title").value = todo.title;
             document.getElementById("updated-todo-description").value = todo.description;
@@ -279,9 +295,9 @@ const uiController = (() => {
         document.querySelector(".cancel-todo").addEventListener("click", () => {
             addTodoDialog.close();
             document.querySelector(".add-todo-modal__form").reset();
-        })
+        });
 
-        // add todo-item to current project
+        // add todo-item in current project
         const addTodoForm = document.querySelector(".add-todo-modal__form");
         addTodoForm.addEventListener("submit", addTodo);
 
@@ -292,14 +308,15 @@ const uiController = (() => {
         // open/close dialog for updating a todo-item
         const updateTodoDialog = document.querySelector(".update-todo-modal");
         todoList.addEventListener("click", showUpdateTodoDialog);
-        // updateTodoModal.addEventListener("click", (event) => {
-        //     if (event.target.closest(""))
-        //     addTodoDialog.showModal();
-        // });
-        // document.querySelector(".cancel-todo").addEventListener("click", () => {
-        //     addTodoDialog.close();
-        //     document.querySelector(".add-todo-modal__form").reset();
-        // })
+        document.querySelector(".cancel-update-todo").addEventListener("click", (event) => {
+            updateTodoDialog.close();
+            document.querySelector(".update-todo-modal__form").reset();
+            document.querySelector(".update-todo-modal__form").classList.remove("data-todoId");
+        });
+
+        // update todo-item
+        const updateTodoForm = document.querySelector(".update-todo-modal__form");
+        updateTodoForm.addEventListener("submit", updateTodo);
     }
 
     function initializeApp() {

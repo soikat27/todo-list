@@ -73,7 +73,7 @@ const appController = (() => {
             todo.updateTodo(newTitle, newDesc, newDueDate, newPriority, newNotes, newChecklist);
     }
 
-    return {getAllProjects, getCurrentProject, getDefaultProject, selectProject, createProject, deleteProject, addTodo, removeTodo, updateProject};
+    return {getAllProjects, getCurrentProject, getDefaultProject, selectProject, createProject, deleteProject, addTodo, removeTodo, updateProject, updateTodo};
 })();
 
 export default appController;

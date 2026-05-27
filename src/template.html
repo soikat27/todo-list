@@ -194,6 +194,28 @@
             </form>
         </dialog>
 
+        <!-- delete a todo confirmation dialog modal -->
+        <dialog class="project-modal delete-todo-modal">
+            <form class="project-modal__form delete-todo-modal__form">
+                <header class="project-modal__header">
+                    <div>
+                        <p class="project-modal__eyebrow project-modal__eyebrow--danger">Delete todo</p>
+                        <h2 class="project-modal__title" id="delete-todo-modal-title">Are you sure?</h2>
+                    </div>
+                </header>
+
+                <p class="project-modal__message">
+                    This will permanently delete
+                    <span class="delete-todo-modal__name">this task</span>.
+                </p>
+
+                <div class="project-modal__actions">
+                    <button type="button" class="btn btn--secondary cancel-delete-todo">Cancel</button>
+                    <button type="submit" class="btn btn--danger-solid confirm-delete-todo">Delete todo</button>
+                </div>
+            </form>
+        </dialog>
+
         <main class="main">
             <header class="main-header">
                 <div class="main-header__intro">

@@ -64,7 +64,7 @@ const appController = (() => {
     }
 
     function removeTodo(todoId) {
-        createProject.removeTodo(todoId);
+        curProject.removeTodo(todoId);
     }
 
     function updateTodo(todoId, newTitle, newDesc, newDueDate, newPriority, newNotes, newChecklist) {

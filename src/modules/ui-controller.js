@@ -43,7 +43,7 @@ const uiController = (() => {
         const updateBtn = document.querySelector(".btn-icon--update-project");
         updateBtn.classList.toggle("hidden", isDefaultProject);
 
-        // show empty state if currentProject-todolist is empty
+        // show empty state if currentProject-todo list is empty
         const isEmptyTodo = AppController.getCurrentProject().todoList.length === 0;
         const emptyState = document.querySelector(".empty-state");
         emptyState.classList.toggle("hidden", !isEmptyTodo);
@@ -64,7 +64,7 @@ const uiController = (() => {
                                 Due <time datetime="${todo.dueDate}">${format(parseISO(todo.dueDate), "MMM d, yyyy")}</time>
                             </span>
                         </span>
-                        <span class="todo-card__priority todo-card__priority--high">${todo.priority}</span>
+                        <span class="todo-card__priority todo-card__priority--${todo.priority}">${todo.priority}</span>
                     </summary>
 
                     <div class="todo-card__details">
@@ -123,7 +123,7 @@ const uiController = (() => {
             const actionBtnHtml = `
                 <div class="todo-card__actions">
                     <button type="button" class="btn btn--secondary btn-edit">Edit todo</button>
-                    <button type="button" class="btn btn--danger">Delete todo</button>
+                    <button type="button" class="btn btn--danger btn-delete-todo">Delete todo</button>
                 </div>
             `;
             cardDetails.insertAdjacentHTML("beforeend", actionBtnHtml);
@@ -237,6 +237,16 @@ const uiController = (() => {
         }
     }
 
+    function deleteTodo(event) {
+        event.preventDefault();
+
+        const todoId = event.currentTarget.dataset.todoId;
+        AppController.removeTodo(todoId);
+        updateDisplay();
+
+        document.querySelector(".delete-todo-modal").close();
+    }
+
     function setEventListeners() {
         // open/close dialog for adding/canceling a new project
         const addProjectBtn = document.querySelector(".btn-icon--add-project");
@@ -247,7 +257,7 @@ const uiController = (() => {
         document.querySelector(".cancel-project").addEventListener("click", () => {
             addProjectDialog.close();
             document.querySelector(".add-project-modal__form").reset();
-        })
+        });
 
         // add project to the project-rail
         const addProjectForm = document.querySelector(".project-modal__form");
@@ -265,7 +275,7 @@ const uiController = (() => {
         });
         document.querySelector(".cancel-delete-project").addEventListener("click", () => {
             deleteProjectDialog.close();
-        })
+        });
 
         // delete project
         const deleteProjectForm = document.querySelector(".delete-project-modal");
@@ -280,7 +290,7 @@ const uiController = (() => {
         document.querySelector(".cancel-update-project").addEventListener("click", () => {
             updateProjectDialog.close();
             document.querySelector(".update-project-modal__form").reset();
-        })
+        });
 
         // update project
         const updateProjectForm = document.querySelector(".update-project-modal__form");
@@ -317,6 +327,27 @@ const uiController = (() => {
         // update todo-item
         const updateTodoForm = document.querySelector(".update-todo-modal__form");
         updateTodoForm.addEventListener("submit", updateTodo);
+
+        // open/close dialog for deleting a todo-item
+        const deleteTodoDialog = document.querySelector(".delete-todo-modal");
+        todoList.addEventListener("click", (event) => {
+            const deleteBtn = event.target.closest(".btn-delete-todo");
+            if (deleteBtn) {
+                const todoId = event.target.closest(".todo-card").dataset.id;
+                // store the id temporarily in update modal form
+                document.querySelector(".delete-todo-modal__form").dataset.todoId = todoId;
+
+                deleteTodoDialog.showModal();
+            }    
+        });
+        document.querySelector(".cancel-delete-todo").addEventListener("click", () => {
+            deleteTodoDialog.close();
+            document.querySelector(".delete-todo-modal__form").classList.remove("data-todoId");
+        });
+
+        // delete a todo
+        const deleteTodoForm = document.querySelector(".delete-todo-modal__form");
+        deleteTodoForm.addEventListener("submit", deleteTodo);
     }
 
     function initializeApp() {

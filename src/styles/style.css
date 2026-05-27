@@ -291,6 +291,11 @@ button:focus-visible {
   font-weight: 600;
 }
 
+.delete-todo-modal__name {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .project-modal__field {
   display: grid;
   gap: 0.55rem;
@@ -434,9 +439,22 @@ button:focus-visible {
   font-weight: 600;
 }
 
+.todo-card__priority--High,
 .todo-card__priority--high {
-  color: var(--danger-hover);
-  background-color: var(--danger-dim);
+  color: #fecaca;
+  background-color: rgba(248, 113, 113, 0.16);
+}
+
+.todo-card__priority--Medium,
+.todo-card__priority--medium {
+  color: #fde68a;
+  background-color: rgba(251, 191, 36, 0.16);
+}
+
+.todo-card__priority--Low,
+.todo-card__priority--low {
+  color: #86efac;
+  background-color: rgba(34, 197, 94, 0.16);
 }
 
 .todo-card__details {

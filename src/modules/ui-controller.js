@@ -1,6 +1,7 @@
 import appController from "./app-controller.js";
 import AppController from "./app-controller.js";
 import { parseISO, format } from "date-fns";
+import ChecklistItem from "./checklist-item.js";
 
 const uiController = (() => {
 
@@ -112,7 +113,7 @@ const uiController = (() => {
                     const html = `
                         <li class="todo-checklist__item">
                             <span class="todo-checklist__dot"></span>
-                            ${checkList}
+                            ${checkList.title}
                         </li>
                     `;
                     checklistDiv.insertAdjacentHTML("beforeend", html);
@@ -180,7 +181,12 @@ const uiController = (() => {
         const dueDate     = document.getElementById("todo-due-date").value;
         const priority    = document.getElementById("todo-priority").value;
         const notes       = document.getElementById("todo-notes").value;
-        const checklist   = document.getElementById("todo-checklist").value.split("\n").map(item => item.trim()).filter(item => item !== "");
+        const checklistTitles = document.getElementById("todo-checklist").value.split("\n").map(item => item.trim()).filter(item => item !== "");
+        const checklist = [];
+        checklistTitles.forEach(title => {
+            const checklistItem = new ChecklistItem(title);
+            checklist.push(checklistItem);
+        });
 
         AppController.addTodo(title, description, dueDate, priority, notes, checklist);
         updateDisplay();
@@ -207,8 +213,13 @@ const uiController = (() => {
         const dueDate     = document.getElementById("updated-todo-due-date").value;
         const priority    = document.getElementById("updated-todo-priority").value;
         const notes       = document.getElementById("updated-todo-notes").value;
-        const checklist   = document.getElementById("updated-todo-checklist").value.split("\n").map(item => item.trim()).filter(item => item !== "");
-        
+        const checklistTitles = document.getElementById("updated-todo-checklist").value.split("\n").map(item => item.trim()).filter(item => item !== "");
+        const checklist = [];
+        checklistTitles.forEach(title => {
+            const checklistItem = new ChecklistItem(title);
+            checklist.push(checklistItem);
+        });
+
         const todoId = event.currentTarget.dataset.todoId;
         AppController.updateTodo(todoId, title, description, dueDate, priority, notes, checklist);
         updateDisplay();
@@ -230,7 +241,11 @@ const uiController = (() => {
             document.getElementById("updated-todo-due-date").value = todo.dueDate;
             document.getElementById("updated-todo-priority").value = todo.priority;
             document.getElementById("updated-todo-notes").value = todo.notes;
-            document.getElementById("updated-todo-checklist").value = todo.checklist.join("\n");
+            const checklistTitles = [];
+            todo.checklist.forEach(checklistItem => {
+                checklistTitles.push(checklistItem.title);
+            });
+            document.getElementById("updated-todo-checklist").value = checklistTitles.join("\n");
 
             const updateTodoDialog = document.querySelector(".update-todo-modal");
             updateTodoDialog.showModal();   
@@ -367,6 +382,7 @@ const uiController = (() => {
     }
 
     function initializeApp() {
+        AppController.loadAppData();
         setEventListeners();
         updateDisplay();
     }

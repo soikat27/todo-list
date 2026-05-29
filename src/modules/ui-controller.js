@@ -1,4 +1,3 @@
-import appController from "./app-controller.js";
 import AppController from "./app-controller.js";
 import { parseISO, format } from "date-fns";
 import ChecklistItem from "./checklist-item.js";
@@ -268,10 +267,8 @@ const uiController = (() => {
             event.preventDefault();   // stop <summary> from toggling <details>
             
             const todoId = event.target.closest(".todo-card").dataset.id;
-            const todo = AppController.getCurrentProject().getTodo(todoId);
             AppController.toggleTodoCompleted(todoId);
             updateDisplay();
-            // event.target.closest(".todo-card").classList.toggle("todo-card--completed", todo.completed);
         }
     }
 
@@ -288,7 +285,7 @@ const uiController = (() => {
         });
 
         // add project to the project-rail
-        const addProjectForm = document.querySelector(".project-modal__form");
+        const addProjectForm = document.querySelector(".add-project-modal__form");
         addProjectForm.addEventListener("submit", addProject);
 
         // select project
@@ -306,7 +303,7 @@ const uiController = (() => {
         });
 
         // delete project
-        const deleteProjectForm = document.querySelector(".delete-project-modal");
+        const deleteProjectForm = document.querySelector(".delete-project-modal__form");
         deleteProjectForm.addEventListener("submit", deleteProject);
 
         // open/close dialog for updating/canceling a project
@@ -349,7 +346,7 @@ const uiController = (() => {
         document.querySelector(".cancel-update-todo").addEventListener("click", (event) => {
             updateTodoDialog.close();
             document.querySelector(".update-todo-modal__form").reset();
-            document.querySelector(".update-todo-modal__form").classList.remove("data-todoId");
+            delete document.querySelector(".update-todo-modal__form").dataset.todoId;
         });
 
         // update todo-item
@@ -370,7 +367,7 @@ const uiController = (() => {
         });
         document.querySelector(".cancel-delete-todo").addEventListener("click", () => {
             deleteTodoDialog.close();
-            document.querySelector(".delete-todo-modal__form").classList.remove("data-todoId");
+            delete document.querySelector(".delete-todo-modal__form").dataset.todoId;
         });
 
         // delete a todo

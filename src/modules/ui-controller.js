@@ -56,7 +56,7 @@ const uiController = (() => {
 
         AppController.getCurrentProject().getAllTodos().forEach(todo => {
             const html = `
-                <details class="todo-card" data-id="${todo.id}">
+                <details class="todo-card ${(todo.completed) ? "todo-card--completed" : ""}" data-id="${todo.id}">
                     <summary class="todo-card__summary">
                         <span class="todo-card__check"></span>
                         <span class="todo-card__content">
@@ -270,8 +270,8 @@ const uiController = (() => {
             const todoId = event.target.closest(".todo-card").dataset.id;
             const todo = AppController.getCurrentProject().getTodo(todoId);
             AppController.toggleTodoCompleted(todoId);
-
-            event.target.closest(".todo-card").classList.toggle("todo-card--completed", todo.completed);
+            updateDisplay();
+            // event.target.closest(".todo-card").classList.toggle("todo-card--completed", todo.completed);
         }
     }
 

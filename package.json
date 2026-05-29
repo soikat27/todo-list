@@ -1,8 +1,8 @@
 {
-  "name": "todo-list",
+  "name": "stay-listed",
   "version": "1.0.0",
   "private": true,
-  "description": "Todo list app for The Odin Project",
+  "description": "stayListed — project-based todo app with localStorage",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,16 +12,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/soikat27/todo-list.git"
+    "url": "git+https://github.com/soikat27/stay-listed.git"
   },
   "keywords": ["todo", "odin-project"],
   "author": "Soikat Saha",
   "license": "ISC",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/soikat27/todo-list/issues"
+    "url": "https://github.com/soikat27/stay-listed/issues"
   },
-  "homepage": "https://soikat27.github.io/todo-list/",
+  "homepage": "https://soikat27.github.io/stay-listed/",
   "devDependencies": {
     "css-loader": "^7.1.4",
     "gh-pages": "^6.3.0",

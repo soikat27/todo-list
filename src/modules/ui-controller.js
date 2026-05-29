@@ -2,16 +2,21 @@ import AppController from "./app-controller.js";
 import { parseISO, format } from "date-fns";
 import ChecklistItem from "./checklist-item.js";
 
+/**
+ * UiController — DOM layer for stayListed.
+ * Renders projects/todos, handles modals and clicks, and delegates
+ * data changes to AppController.
+ */
 const uiController = (() => {
 
+    /** Re-render the full UI (projects, header, todo list). */
     function updateDisplay() {
         displayProjects();
-        // update display associates concerning current project
         updateCurrentProjectUI();
-        // display all todos
         displayTodos();
     }
     
+    /** Build the horizontal project rail from AppController state. */
     function displayProjects() {
         const projectList = document.querySelector("ul.project-list");
         projectList.innerHTML = "";
@@ -29,26 +34,24 @@ const uiController = (() => {
         });
     }
 
+    /** Update header title, empty state, and default-project button visibility. */
     function updateCurrentProjectUI() {
-        // update current project title
         const curProjectTitle = document.querySelector(".main-header__title");
         curProjectTitle.textContent = AppController.getCurrentProject().title;
 
-        // update delete button
         const isDefaultProject = AppController.getCurrentProject() === AppController.getDefaultProject();
         const deleteBtn = document.querySelector(".btn--danger");
         deleteBtn.classList.toggle("hidden", isDefaultProject);
 
-        // update "update-project" button
         const updateBtn = document.querySelector(".btn-icon--update-project");
         updateBtn.classList.toggle("hidden", isDefaultProject);
 
-        // show empty state if currentProject-todo list is empty
         const isEmptyTodo = AppController.getCurrentProject().todoList.length === 0;
         const emptyState = document.querySelector(".empty-state");
         emptyState.classList.toggle("hidden", !isEmptyTodo);
     }
 
+    /** Render expandable todo cards for the current project. */
     function displayTodos() {
         const todoList = document.querySelector(".todo-list");
         todoList.innerHTML = "";
@@ -80,7 +83,6 @@ const uiController = (() => {
             todoList.insertAdjacentHTML("beforeend", html);
  
             const cardDetails = document.querySelector(`details[data-id="${todo.id}"] .todo-card__details`);
-            // add notes (if any)
             if (todo.notes) {
                 const html = `
                     <section class="todo-card__section">
@@ -93,9 +95,7 @@ const uiController = (() => {
                 cardDetails.insertAdjacentHTML("beforeend", html);
             }
 
-            // add checkList (if any)
             if (todo.checklist.length > 0) {
-                // add skeletal body
                 const html = `
                     <section class="todo-checklist">
                         <h3 class="todo-card__section-title">Checklist</h3>
@@ -106,7 +106,6 @@ const uiController = (() => {
                 `;
                 cardDetails.insertAdjacentHTML("beforeend", html);
 
-                // add checklist-items
                 const checklistDiv = document.querySelector(`details[data-id="${todo.id}"] .todo-checklist__list`);
                 todo.checklist.forEach(checkList => {
                     const html = `
@@ -119,7 +118,6 @@ const uiController = (() => {
                 });
             }
             
-            // add actions buttons
             const actionBtnHtml = `
                 <div class="todo-card__actions">
                     <button type="button" class="btn btn--secondary btn-edit">Edit todo</button>
@@ -130,6 +128,7 @@ const uiController = (() => {
         });
     }
 
+    /** @param {Event} event - Project rail click. */
     function selectProject(event) {
         const project = event.target.closest(".project-item");
         if (project) {
@@ -139,6 +138,7 @@ const uiController = (() => {
         }
     }
 
+    /** @param {SubmitEvent} event - Add project form submit. */
     function addProject(event) {
         event.preventDefault();
 
@@ -150,6 +150,7 @@ const uiController = (() => {
         document.querySelector(".add-project-modal__form").reset();
     }
 
+    /** @param {SubmitEvent} event - Delete project confirmation submit. */
     function deleteProject(event) {
         event.preventDefault();
 
@@ -160,6 +161,7 @@ const uiController = (() => {
         document.querySelector(".delete-project-modal").close();
     }
 
+    /** @param {SubmitEvent} event - Update project form submit. */
     function updateProject(event) {
         event.preventDefault();
 
@@ -172,6 +174,7 @@ const uiController = (() => {
         document.querySelector(".update-project-modal__form").reset();
     }
 
+    /** @param {SubmitEvent} event - Add todo form submit. */
     function addTodo(event) {
         event.preventDefault();
 
@@ -194,6 +197,7 @@ const uiController = (() => {
         document.querySelector(".add-todo-modal__form").reset();
     }
 
+    /** Close other todo cards when one is clicked closed. */
     function collapseTodoCard(event) {
         const todoItem = event.target.closest("details");
         if (!todoItem || todoItem.open)
@@ -204,6 +208,7 @@ const uiController = (() => {
         });
     }
 
+    /** @param {SubmitEvent} event - Update todo form submit. */
     function updateTodo(event) {
         event.preventDefault();
 
@@ -227,12 +232,16 @@ const uiController = (() => {
         document.querySelector(".update-todo-modal__form").reset();
     }
 
+    /**
+     * Open the update modal and pre-fill fields for the clicked todo.
+     * Stores todoId on the form via dataset for submit.
+     * @param {Event} event
+     */
     function showUpdateTodoDialog(event) {
         const updateBtn = event.target.closest(".btn-edit");
         if (updateBtn) {
             const todoId = event.target.closest(".todo-card").dataset.id;
             const todo = AppController.getCurrentProject().getTodo(todoId);
-            // store the id temporarily in update modal form
             document.querySelector(".update-todo-modal__form").dataset.todoId = todoId;
 
             document.getElementById("updated-todo-title").value = todo.title;
@@ -251,6 +260,7 @@ const uiController = (() => {
         }
     }
 
+    /** @param {SubmitEvent} event - Delete todo confirmation submit. */
     function deleteTodo(event) {
         event.preventDefault();
 
@@ -261,10 +271,15 @@ const uiController = (() => {
         document.querySelector(".delete-todo-modal").close();
     }
 
+    /**
+     * Toggle todo completed when the check circle is clicked.
+     * preventDefault stops the summary from expanding the card.
+     * @param {Event} event
+     */
     function toggleTodoCompleted(event) {
         const todoCheckBtn = event.target.closest(".todo-card__check");
         if (todoCheckBtn) {
-            event.preventDefault();   // stop <summary> from toggling <details>
+            event.preventDefault();
             
             const todoId = event.target.closest(".todo-card").dataset.id;
             AppController.toggleTodoCompleted(todoId);
@@ -272,8 +287,8 @@ const uiController = (() => {
         }
     }
 
+    /** Attach all modal and delegated list click/submit listeners. */
     function setEventListeners() {
-        // open/close dialog for adding/canceling a new project
         const addProjectBtn = document.querySelector(".btn-icon--add-project");
         const addProjectDialog = document.querySelector(".add-project-modal");
         addProjectBtn.addEventListener("click", () => {
@@ -284,15 +299,12 @@ const uiController = (() => {
             document.querySelector(".add-project-modal__form").reset();
         });
 
-        // add project to the project-rail
         const addProjectForm = document.querySelector(".add-project-modal__form");
         addProjectForm.addEventListener("submit", addProject);
 
-        // select project
         const projectList = document.querySelector("ul.project-list");
         projectList.addEventListener("click", selectProject);
 
-        // open/close dialog for deleting projects
         const deleteProjectBtn = document.querySelector(".btn--danger");
         const deleteProjectDialog = document.querySelector(".delete-project-modal");
         deleteProjectBtn.addEventListener("click", () => {
@@ -302,11 +314,9 @@ const uiController = (() => {
             deleteProjectDialog.close();
         });
 
-        // delete project
         const deleteProjectForm = document.querySelector(".delete-project-modal__form");
         deleteProjectForm.addEventListener("submit", deleteProject);
 
-        // open/close dialog for updating/canceling a project
         const updateProjectBtn = document.querySelector(".btn-icon--update-project");
         const updateProjectDialog = document.querySelector(".update-project-modal");
         updateProjectBtn.addEventListener("click", () => {
@@ -317,11 +327,9 @@ const uiController = (() => {
             document.querySelector(".update-project-modal__form").reset();
         });
 
-        // update project
         const updateProjectForm = document.querySelector(".update-project-modal__form");
         updateProjectForm.addEventListener("submit", updateProject);
 
-        // open/close dialog for adding/canceling a todo-item in current project
         const addTodoBtn = document.querySelector(".btn-icon--add-todo");
         const addTodoDialog = document.querySelector(".add-todo-modal");
         addTodoBtn.addEventListener("click", () => {
@@ -332,15 +340,12 @@ const uiController = (() => {
             document.querySelector(".add-todo-modal__form").reset();
         });
 
-        // add todo-item in current project
         const addTodoForm = document.querySelector(".add-todo-modal__form");
         addTodoForm.addEventListener("submit", addTodo);
 
-        // collapse previously selected card
         const todoList = document.querySelector(".todo-list");
         todoList.addEventListener("click", collapseTodoCard);
 
-        // open/close dialog for updating a todo-item
         const updateTodoDialog = document.querySelector(".update-todo-modal");
         todoList.addEventListener("click", showUpdateTodoDialog);
         document.querySelector(".cancel-update-todo").addEventListener("click", (event) => {
@@ -349,17 +354,14 @@ const uiController = (() => {
             delete document.querySelector(".update-todo-modal__form").dataset.todoId;
         });
 
-        // update todo-item
         const updateTodoForm = document.querySelector(".update-todo-modal__form");
         updateTodoForm.addEventListener("submit", updateTodo);
 
-        // open/close dialog for deleting a todo-item
         const deleteTodoDialog = document.querySelector(".delete-todo-modal");
         todoList.addEventListener("click", (event) => {
             const deleteBtn = event.target.closest(".btn-delete-todo");
             if (deleteBtn) {
                 const todoId = event.target.closest(".todo-card").dataset.id;
-                // store the id temporarily in update modal form
                 document.querySelector(".delete-todo-modal__form").dataset.todoId = todoId;
 
                 deleteTodoDialog.showModal();
@@ -370,14 +372,16 @@ const uiController = (() => {
             delete document.querySelector(".delete-todo-modal__form").dataset.todoId;
         });
 
-        // delete a todo
         const deleteTodoForm = document.querySelector(".delete-todo-modal__form");
         deleteTodoForm.addEventListener("submit", deleteTodo);
 
-        // toggle a todo complete status
         todoList.addEventListener("click", toggleTodoCompleted);
     }
 
+    /**
+     * Boot the app: load saved data, bind listeners, render UI.
+     * Entry point called from index.js.
+     */
     function initializeApp() {
         AppController.loadAppData();
         setEventListeners();

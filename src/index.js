@@ -1,3 +1,7 @@
+/**
+ * App entry point.
+ * Loads global styles and boots UiController (load data → listeners → render).
+ */
 import "./styles/normalize.css";
 import "./styles/style.css";
 
